@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enviar Correo — Telecola</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #222222;
+      --border-hover: #333333;
+      --text: #f0f0f0;
+      --muted: #666666;
+      --accent: #e8ff47;
+      --accent-dark: #c8df27;
+      --danger: #ff4a4a;
+      --success: #47ff8a;
+      --radius: 6px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .header {
+      margin-bottom: 2.5rem;
+    }
+
+    .logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 300;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    h1 strong {
+      font-weight: 500;
+    }
+
+    .form {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    input, textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      padding: 10px 14px;
+      transition: border-color 0.15s;
+      width: 100%;
+      outline: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--border-hover);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0.25rem 0;
+    }
+
+    .btn {
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      color: #0a0a0a;
+      cursor: pointer;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      padding: 13px 20px;
+      text-transform: uppercase;
+      transition: background 0.15s, transform 0.1s;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn:hover { background: var(--accent-dark); }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    .btn svg { width: 16px; height: 16px; }
+
+    .status {
+      border-radius: var(--radius);
+      display: none;
+      font-size: 13px;
+      padding: 10px 14px;
+      font-family: 'DM Mono', monospace;
+    }
+
+    .status.loading {
+      display: block;
+      background: #1a1a1a;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .status.success {
+      display: block;
+      background: #0d1f14;
+      color: var(--success);
+      border: 1px solid #1a3d28;
+    }
+
+    .status.error {
+      display: block;
+      background: #1f0d0d;
+      color: var(--danger);
+      border: 1px solid #3d1a1a;
+    }
+
+    .id-badge {
+      font-size: 10px;
+      opacity: 0.6;
+      display: block;
+      margin-top: 4px;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <p class="logo">telecola<span>.site</span> / mail</p>
+      <h1>Enviar un<br><strong>correo de prueba</strong></h1>
+    </div>
+
+    <div class="form">
+      <div class="field">
+        <label>Para</label>
+        <input type="email" id="to" value="mariapizbv@gmail.com" />
+      </div>
+
+      <div class="field">
+        <label>Asunto</label>
+        <input type="text" id="subject" value="¡Hola desde telecola.site! 🚀" />
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="field">
+        <label>Mensaje (HTML)</label>
+        <textarea id="html"><h2>¡Hola!</h2><p>Este correo fue enviado desde el servidor en <strong>Railway</strong> usando la API de <strong>Resend</strong>.</p><p>Todo funciona ✅</p></textarea>
+      </div>
+
+      <button class="btn" id="btn" onclick="send()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+        Enviar correo
+      </button>
+
+      <div class="status" id="status"></div>
+    </div>
+  </div>
+
+  <script>
+    async function send() {
+      const to = document.getElementById('to').value.trim();
+      const subject = document.getElementById('subject').value.trim();
+      const html = document.getElementById('html').value.trim();
+      const btn = document.getElementById('btn');
+      const status = document.getElementById('status');
+
+      if (!to || !subject || !html) {
+        status.className = 'status error';
+        status.textContent = '⚠ Completa todos los campos';
+        return;
+      }
+
+      btn.disabled = true;
+      status.className = 'status loading';
+      status.textContent = '⟳ Enviando...';
+
+      try {
+        const res = await fetch('/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ to, subject, html })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          status.className = 'status success';
+          status.innerHTML = '✓ Correo enviado exitosamente<span class="id-badge">ID: ' + data.id + '</span>';
+        } else {
+          status.className = 'status error';
+          status.textContent = '✕ ' + (data.error || 'Error desconocido');
+        }
+      } catch (err) {
+        status.className = 'status error';
+        status.textContent = '✕ Error de red: ' + err.message;
+      }
+
+      btn.disabled = false;
+    }
+  </script>
+</body>
+</html>
